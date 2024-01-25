@@ -63,8 +63,8 @@ erDiagram
     }
 
     REVISION{
-        int ID
-        int id_coche PK
+        int ID PK
+        int id_coche FK
         date fecha_revision
         string descripcion
     }
