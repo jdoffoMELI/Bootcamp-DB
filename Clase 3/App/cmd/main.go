@@ -15,7 +15,7 @@ func main() {
 		Passwd: os.Getenv("MYSQL_ROOT_PASSWORD"),
 		Net:    "tcp",
 		Addr:   "localhost:3306",
-		DBName: "my_db",
+		DBName: "storage",
 	}
 
 	/* Creates the connection to the database */
@@ -31,7 +31,7 @@ func main() {
 	}
 	fmt.Println("Database connected succesfuly!")
 	repository := repository.CreateNewProductMySQL(db)
-	product, err := repository.GetProduct(1)
+	product, err := repository.GetProduct(2)
 	if err != nil {
 		panic(err)
 	}

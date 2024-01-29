@@ -6,8 +6,8 @@ DROP USER IF EXISTS 'user1'@'localhost';
 CREATE USER 'user1'@'localhost' IDENTIFIED BY 'secret_password';
 GRANT ALL PRIVILEGES ON *.* TO 'user1'@'localhost';
 -- 
-CREATE DATABASE  IF NOT EXISTS `my_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `my_db`;
+CREATE DATABASE  IF NOT EXISTS `storage` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `storage`;
 -- MySQL dump 10.13  Distrib 8.0.25, for Linux (x86_64)
 --
 -- Host: localhost    Database: my_db

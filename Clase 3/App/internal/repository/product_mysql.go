@@ -30,7 +30,7 @@ func CreateNewProductMySQL(db *sql.DB) *ProductMySQL {
 
 func (p ProductMySQL) GetProduct(id int) (app.Product, error) {
 	/* Query for the Product */
-	queryString := "SELECT p.name, p.quantity, p.code_value, p.is_published, p.expiration, p.price" +
+	queryString := "SELECT p.id, p.name, p.quantity, p.code_value, p.is_published, p.expiration, p.price" +
 		"  FROM products p " +
 		" WHERE p.id = ?   "
 	row := p.db.QueryRow(queryString, id)
@@ -41,11 +41,13 @@ func (p ProductMySQL) GetProduct(id int) (app.Product, error) {
 
 	/* Scan the Product */
 	var product app.Product
-	err := row.Scan(&product.Name, &product.Quantity, &product.CodeValue, &product.IsPublished, &product.Expiration, &product.Price)
+	err := row.Scan(&product.Id, &product.Name, &product.Quantity, &product.CodeValue, &product.IsPublished, &product.Expiration, &product.Price)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return app.Product{}, app.ErrRepositoryProductNotFound
+		}
 		return app.Product{}, err
 	}
-
 	return product, nil
 }
 
@@ -60,7 +62,7 @@ func (p ProductMySQL) GetProduct(id int) (app.Product, error) {
 func (p ProductMySQL) GetProducts() ([]app.Product, error) {
 	/* Query definition */
 	queryString := "" +
-		"SELECT p.name, p.quantity, p.code_value, p.is_published, p.expiration, p.price" +
+		"SELECT p.id, p.name, p.quantity, p.code_value, p.is_published, p.expiration, p.price" +
 		"  FROM products p "
 	rows, err := p.db.Query(queryString)
 
@@ -72,7 +74,7 @@ func (p ProductMySQL) GetProducts() ([]app.Product, error) {
 	var products []app.Product
 	for rows.Next() {
 		var product app.Product
-		err := rows.Scan(&product.Name, &product.Quantity, &product.CodeValue, &product.IsPublished, &product.Expiration, &product.Price)
+		err := rows.Scan(&product.Id, &product.Name, &product.Quantity, &product.CodeValue, &product.IsPublished, &product.Expiration, &product.Price)
 
 		if err != nil {
 			return nil, err
